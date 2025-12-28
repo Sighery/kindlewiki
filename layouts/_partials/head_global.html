@@ -1,9 +1,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="shortcut icon" type="image/x-icon" href="https://kindlemodding.org/favicon.ico" sizes="512x512 256x256 192x192 128x128 96x96 64x64 48x48 32x32 16x16">
-<link rel="icon" type="image/png" sizes="192x192" href="https://kindlemodding.org/logo-192.png">
-<link rel="icon" type="image/png" sizes="48x48" href="https://kindlemodding.org/logo-48.png">
-<link rel="apple-touch-icon" href="https://kindlemodding.org/logo.png" type="image/x-icon" sizes="1024x1024">
-<link rel="apple-touch-icon" href="https://kindlemodding.org/logo-192.png" type="image/x-icon" sizes="192x192">
+<link rel="shortcut icon" type="image/x-icon" href="{{.Site.BaseURL}}favicon.ico" sizes="512x512 256x256 192x192 128x128 96x96 64x64 48x48 32x32 16x16">
+<link rel="icon" type="image/png" sizes="192x192" href="{{.Site.BaseURL}}logo-192.png">
+<link rel="icon" type="image/png" sizes="48x48" href="{{.Site.BaseURL}}logo-48.png">
+<link rel="apple-touch-icon" href="{{.Site.BaseURL}}logo.png" type="image/x-icon" sizes="1024x1024">
+<link rel="apple-touch-icon" href="{{.Site.BaseURL}}logo-192.png" type="image/x-icon" sizes="192x192">
 
 <meta name="twitter:site" content="Kindle Modding Wiki">
 
@@ -31,32 +31,13 @@
 
 {{ partial "include-scss.html" "css/main" }}
 
-<script src="/assets/js/global.js"></script>
-<script src="/assets/js/fluent_guide.js"></script>
-<script src="/assets/js/search.js"></script>
-
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MT46Q863');</script>
-<!-- End Google Tag Manager -->
-
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MT46Q863"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FBQYY5S667"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-FBQYY5S667');
+<script type="text/javascript">
+    const baseUrl = "{{ .Site.BaseURL }}";
 </script>
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4468899728405672"
-     crossorigin="anonymous"></script>
+<script src="{{.Site.BaseURL}}assets/js/global.js"></script>
+<script src="{{.Site.BaseURL}}assets/js/fluent_guide.js"></script>
+<script src="{{.Site.BaseURL}}assets/js/search.js"></script>
+
+<link href="{{.Site.BaseURL}}assets/css/global.css" rel="stylesheet">
+<link href="{{.Site.BaseURL}}assets/css/fluent_guide.css" rel="stylesheet">

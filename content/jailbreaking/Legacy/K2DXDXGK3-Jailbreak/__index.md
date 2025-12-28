@@ -80,7 +80,7 @@ The NiLuJe K2/DX/DXG/K3 Jailbreak is a legacy jailbreak created by [NiLuJe](http
         <button class="btn btn-green" id="next">Next Step</button>
     </div>
 </div>
-<script>new Guide("guide", "/jailbreaking/post-jailbreak/installing-kual-mrpi/", "Installing KUAL & MRPI");</script>
+<script>new Guide("guide", "../../post-jailbreak/installing-kual-mrpi/", "Installing KUAL & MRPI");</script>
 
 <script>
 /**

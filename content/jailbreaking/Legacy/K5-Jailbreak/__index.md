@@ -60,7 +60,7 @@ The NiLuJe K5 Jailbreak is a legacy jailbreak created by [NiLuJe](https://www.mo
         <button class="btn btn-green" id="next">Next Step</button>
     </div>
 </div>
-<script>new Guide("guide", "/jailbreaking/post-jailbreak/installing-kual-mrpi/", "Installing KUAL & MRPI");</script>
+<script>new Guide("guide", "../../post-jailbreak/installing-kual-mrpi/", "Installing KUAL & MRPI");</script>
 
 ## Credits
 - Created by [NiLuJe](https://www.mobileread.com/forums/member.php?u=69624)
