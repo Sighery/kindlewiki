@@ -5,6 +5,8 @@ params:
     navbar_exclude: true
 ---
 
+#
+
 <style>
     .mainContent
     {
@@ -99,16 +101,14 @@ params:
             <h1 style="color: var(--text-colour) !important;">Kindle Modding Wiki</h1>
             <p>Welcome to the Kindle Modding Wiki</p>
             <p>Your one-stop shop for all things related to hacking Kindles</p>
-            <a class="button" href="/kindle-models.html">Get Started</a>
+            <a class="button" href="./kindle-models.html">Get Started</a>
         </div>
     </div>
-
     <div class="landing-section buttons">
-        <a class="card" href="/kindle-dev/">
+        <a class="card" href="./kindle-dev">
             <h2 style="color: var(--text-colour) !important;">Developer Documentation</h2>
             <p>Documentation for homebrew developers</p>
         </a>
-
         <a class="card" href="http://discord.kindlemodding.org/">
             <h2 style="color: var(--text-colour) !important;">Discord</h2>
             <p>Join our Discord</p>

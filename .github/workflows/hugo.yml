@@ -41,6 +41,9 @@ jobs:
         with:
           hugo-version: 'latest'
           extended: true
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
       - uses: actions/cache@v4
         id: cache
         with:
@@ -73,7 +76,7 @@ jobs:
       - name: Copy jb.sh to static folder
         run: cp _jb.sh/build/jb.sh ./static/
       - name: Build with Hugo
-        run: hugo --minify
+        run: hugo --minify --baseURL "${{ steps.pages.outputs.base_url }}"
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v4

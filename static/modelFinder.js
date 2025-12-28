@@ -203,7 +203,7 @@ function generateTable() {
     document.getElementById("fullModelTable").appendChild(table);
 }
 
-fetch('/models.json').then(response => response.json()).then((data) => {
+fetch(`${baseUrl}models.json`).then(response => response.json()).then((data) => {
     window.kindleModels = data;
     generateTable();
 });

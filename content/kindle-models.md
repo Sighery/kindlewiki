@@ -4,7 +4,7 @@ title: Kindle Models
 weight: 0
 ---
 
-<h1>Kindle Models</h1>
+# Kindle Models
 <p>Identify your Kindle model and the jailbreak method best suited for it</p>
 
 <blockquote class="info">
@@ -52,4 +52,4 @@ You only need to enter the first 8 characters of your serial number, not all 16 
 </div>
 
 
-<script src="./modelFinder.js"></script>
+<script src="modelFinder.js"></script>

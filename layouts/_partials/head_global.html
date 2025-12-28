@@ -3,9 +3,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 
-<script src="/assets/js/global.js"></script>
+<script type="text/javascript">
+    const baseUrl = "{{ .Site.BaseURL }}";
+</script>
 
-<script src="/assets/js/fluent_guide.js"></script>
+<script src="{{.Site.BaseURL}}assets/js/global.js"></script>
 
-<link href="/assets/css/global.css" rel="stylesheet">
-<link href="/assets/css/fluent_guide.css" rel="stylesheet">
+<script src="{{.Site.BaseURL}}assets/js/fluent_guide.js"></script>
+
+<link href="{{.Site.BaseURL}}assets/css/global.css" rel="stylesheet">
+<link href="{{.Site.BaseURL}}assets/css/fluent_guide.css" rel="stylesheet">
