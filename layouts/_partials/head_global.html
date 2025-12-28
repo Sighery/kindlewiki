@@ -4,9 +4,13 @@
 
 {{ partial "include-scss.html" "css/main" }}
 
-<script src="/assets/js/global.js"></script>
-<script src="/assets/js/fluent_guide.js"></script>
-<script src="/assets/js/search.js"></script>
+<script type="text/javascript">
+    const baseUrl = "{{ .Site.BaseURL }}";
+</script>
 
-<link href="/assets/css/global.css" rel="stylesheet">
-<link href="/assets/css/fluent_guide.css" rel="stylesheet">
+<script src="{{.Site.BaseURL}}assets/js/global.js"></script>
+<script src="{{.Site.BaseURL}}assets/js/fluent_guide.js"></script>
+<script src="{{.Site.BaseURL}}assets/js/search.js"></script>
+
+<link href="{{.Site.BaseURL}}assets/css/global.css" rel="stylesheet">
+<link href="{{.Site.BaseURL}}assets/css/fluent_guide.css" rel="stylesheet">
