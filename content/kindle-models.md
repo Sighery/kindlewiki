@@ -4,7 +4,7 @@ title: Kindle Models
 weight: 0
 ---
 
-<h1>Kindle Models</h1>
+# Kindle Models
 
 <blockquote class="info">
 Identify your Kindle model and the jailbreak method best suited for it.
@@ -55,4 +55,4 @@ Identify your Kindle model and the jailbreak method best suited for it.
 </div>
 
 
-<script src="./modelFinder.js"></script>
+<script src="modelFinder.js"></script>
