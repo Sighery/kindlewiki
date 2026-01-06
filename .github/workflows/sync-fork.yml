@@ -1,0 +1,33 @@
+name: Sync fork
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 11:13 every Wednesday
+    - cron: '13 11 * * 3'
+
+env:
+  UPSTREAM: 'https://github.com/KindleModding/kindlemodding.github.io.git'
+  BRANCH: 'main'
+  GIT_USER: 'github-actions[bot]'
+  GIT_EMAIL: '41898282+github-actions[bot]@users.noreply.github.com'
+
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Sync
+        run: |
+          git config user.name "$GIT_USER"
+          git config user.email "$GIT_EMAIL"
+          git remote add forked "$UPSTREAM"
+          git fetch forked
+          git pull --rebase forked "$BRANCH"
+          git push --force-with-lease origin "$BRANCH"
