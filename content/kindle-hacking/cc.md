@@ -85,13 +85,23 @@ The `x_ok` column is defined as:<br/>
 
 ## Entries
 
-Main table containing the whole catalog. Everything is here, including books
-and collections.
+Main table containing the whole catalog. Everything is here, including books,
+collections, series containers, dictionaries, and system entries.
+
+The `p_titles_0_collation` and `p_credits_0_name_collation` columns use
+`COLLATE icu`, which requires the ICU extension. The Kindle's `com.lab126.ccat`
+service has ICU built in, but the standalone `sqlite3` CLI on the device does
+not. This means **INSERT operations on this table will fail** when using the
+`sqlite3` CLI with `Error: no such collation sequence: icu`. Workarounds
+include registering a stub collation in Python
+(`conn.create_collation("icu", ...)`), or temporarily stripping `COLLATE icu`
+from the schema via `PRAGMA writable_schema=ON`.
+{ .note }
 
 | Column | Type | Description |
 | ------ | ---- | ----------- |
 | p_uuid | BLOB PRIMARY KEY NOT NULL (UUID) | ID of entry |
-| p_type | BLOB (string) | App-defined type |
+| p_type | BLOB (string) | App-defined type. Known values: `Entry:Item` (books), `Entry:Item:Series` (series container), `Entry:Item:Dictionary`, `Entry:Item:Audible`, `Entry:Item:Feedback`, `Entry:Item:ADC`, `Entry:Item:HDC`, `Entry:Item:Images`, `Entry:Item:AKUGC`, `Entry:Item:HKUGC`, `Collection` |
 | p_location | BLOB (string) | Location (URI to content) |
 | p_lastAccess | BLOB (datetime) | Last access |
 | p_modificationTime | BLOB (datetime) | File modification |
@@ -127,7 +137,7 @@ and collections.
 | p_diskUsage | BLOB (int) | Bytes on disk |
 | p_cdeGroup | BLOB (string) | CDE Grouping ID (to group periodicals, Retail ASIN) |
 | p_cdeKey | BLOB (string) | CDE Key/ASIN |
-| p_cdeType | BLOB (string) | CDE Type |
+| p_cdeType | BLOB (string) | CDE Type. Known values: `EBOK` (Amazon ebook or sideloaded book), `PDOC` (personal document), `AUDI` (Audible audiobook), `series` (series container entry) |
 | p_version | BLOB (string) | Content version |
 | p_guid | BLOB (string) | Content GUID |
 | j_displayObjects | BLOB (array of hashmap) | What to display |
@@ -147,7 +157,7 @@ and collections.
 | p_ownershipType | BLOB (int) | Ownership type |
 | p_shareType | BLOB | Support share feature in Discovery App |
 | p_contentState | BLOB (int) | Downloaded / sideloaded value |
-| p_metadataUnicodeWords | BLOB (string) | Searchable metadata for contents |
+| p_metadataUnicodeWords | BLOB (string) | Searchable metadata for contents. Terms are separated by U+FFFC (OBJECT REPLACEMENT CHARACTER). Typically contains the title and author name repeated: `title\ufffctitle\ufffcauthor\ufffcauthor` |
 | p_homeMemberCount | BLOB (int) | Number of downloaded/sideloaded books inside a collection |
 | j_collectionsSyncAttributes | BLOB | Collection sync attributes |
 | p_collectionSyncCounter | BLOB (int) | Max whispersync counter for a collection |
@@ -155,7 +165,7 @@ and collections.
 | p_originType | BLOB (int) | Content Origin Type |
 | p_pvcId | BLOB | PVC identifier |
 | p_companionCdeKey | BLOB (string) | Companion CDE ASIN. For an audio book, we may have a companion ebook and vice-versa |
-| p_seriesState | BLOB (int) | Series Identifier |
+| p_seriesState | BLOB (int) | Series membership state. `0` = this entry is a member of a series (the firmware hides it from the main library and shows it inside the series container). `1` = default value for all other entries (books not in a series, dictionaries, collections, system items, and `Entry:Item:Series` container rows themselves) |
 | p_totalContentSize | REAL (long) | Total size (including sidecars) occupied by the content on the device |
 | p_visibilityState | BLOB (int) | Used to determine whether an entry should be visible or not |
 | p_isProcessed | BLOB (int) | Flag to specify whether the entry should be processed or has already been processed |
@@ -172,19 +182,63 @@ Unknown.
 
 ## Series
 
-Seems to be some kind of Amazon-exclusive collection, perhaps related to the
-Amazon store?
+Maps books to series for the "Group Series in Library" feature (firmware
+5.13.4+). For Amazon-purchased books, this table is populated by Amazon's
+servers during metadata sync. It can also be populated manually for sideloaded
+books to achieve the same visual grouping.
+
+Each row links a single book to a series. A series with 9 books has 9 rows,
+all sharing the same `d_seriesId`.
 
 | Column | Type | Description |
 | ------ | ---- | ----------- |
-| d_seriesId | BLOB (string) | Identifier of a series |
-| d_itemCdeKey | BLOB (string) | cdeKey of the member |
-| d_itemPosition | BLOB (double) | Position of a member in the series |
-| d_itemPositionLabel | BLOB (string) | Display label of a member |
-| d_itemType | BLOB (string) | Type of the member. Same as p_type in [Entries][] table |
-| d_seriesOrderType | BLOB (string) | Order type of series |
+| d_seriesId | BLOB (string) | Series identifier. Format: `urn:collection:1:asin-{ASIN}` where `{ASIN}` is the Amazon series ASIN (e.g. `B08BX5D4LC`) |
+| d_itemCdeKey | BLOB (string) | `p_cdeKey` of the member book from the [Entries][] table |
+| d_itemPosition | BLOB (double) | 0-indexed position in the series (Book 1 = `0`, Book 2 = `1`, etc.) |
+| d_itemPositionLabel | BLOB (string) | 1-indexed display label shown in the UI (e.g. `"1"`, `"2"`) |
+| d_itemType | BLOB (string) | Type of the member. Always `Entry:Item` for books |
+| d_seriesOrderType | BLOB (string) | Sort behavior. Observed values: `ordered`, `unordered` |
 
 There is a `UNIQUE (d_seriesId, d_itemCdeKey)` constraint on this table.
+
+### Series grouping requirements
+
+For a series to appear in the Kindle library, three things must exist in the
+database:
+
+1. **Rows in the `Series` table** linking each book to the series (this table)
+2. **An `Entry:Item:Series` row in the [Entries][] table** acting as the
+   series container (see below)
+3. **`p_seriesState = 0`** on each member book's `Entries` row, which tells the
+   firmware to hide the individual book and show it inside the series instead
+
+### Entry:Item:Series rows
+
+Each series has a corresponding row in the [Entries][] table with
+`p_type = 'Entry:Item:Series'`. This is the series container that appears in
+the library. Key fields:
+
+| Field | Value / Description |
+| ----- | ------------------- |
+| `p_type` | `Entry:Item:Series` |
+| `p_cdeKey` | The series ASIN (matches the `{ASIN}` portion of `d_seriesId`) |
+| `p_cdeType` | `series` |
+| `p_cdeGroup` | Same as `d_seriesId`: `urn:collection:1:asin-{ASIN}` |
+| `p_mimeType` | `application/x-kindle-series` |
+| `j_titles` | JSON: `[{"display":"Series Name","collation":"Series Name","language":"en","pronunciation":"Series Name"}]` |
+| `j_credits` | Copied from the first book's author credits |
+| `p_thumbnail` | Path to the first book's cover (e.g. `/mnt/us/system/thumbnails/thumbnail_{cdeKey}_EBOK_portrait.jpg`) |
+| `j_members` | `[]` (empty — membership is tracked via the `Series` table, not this field) |
+| `p_memberCount` | Total number of books in the series |
+| `p_homeMemberCount` | Number of downloaded/sideloaded books in the series on the device |
+| `j_displayObjects` | `[{"ref":"titles"},{"ref":"credits"}]` |
+| `p_isArchived` | `1` |
+| `p_isVisibleInHome` | `1` |
+| `p_seriesState` | `1` (the container itself uses `1`; member books use `0`) |
+| `p_visibilityState` | `1` |
+| `p_originType` | `-1` |
+| `p_contentIndexedState` | `2147483647` (INT_MAX — not applicable for series containers) |
+| `p_virtualCollectionCount` | `p_memberCount + 1` |
 
 ## Versions
 
