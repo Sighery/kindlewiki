@@ -156,13 +156,13 @@ from the schema via `PRAGMA writable_schema=ON`.
 | p_metadataStemLanguage | BLOB | Language of the metadata (not used currently. Introduced in J3) |
 | p_ownershipType | BLOB (int) | Ownership type |
 | p_shareType | BLOB | Support share feature in Discovery App |
-| p_contentState | BLOB (int) | Downloaded / sideloaded value |
+| p_contentState | BLOB (int) | Content acquisition state. Known values: `0` = sideloaded or cloud-only (not downloaded from Amazon), `1` = downloaded from Amazon or present on device. Sideloaded books default to `0`; setting to `1` alongside `p_originType = 0` makes the Kindle treat sideloaded content as owned purchased content |
 | p_metadataUnicodeWords | BLOB (string) | Searchable metadata for contents. Terms are separated by U+FFFC (OBJECT REPLACEMENT CHARACTER). Typically contains the title and author name repeated: `title\ufffctitle\ufffcauthor\ufffcauthor` |
 | p_homeMemberCount | BLOB (int) | Number of downloaded/sideloaded books inside a collection |
 | j_collectionsSyncAttributes | BLOB | Collection sync attributes |
 | p_collectionSyncCounter | BLOB (int) | Max whispersync counter for a collection |
 | p_collectionDataSetName | BLOB (string) | Whispersync dataset name for collection |
-| p_originType | BLOB (int) | Content Origin Type |
+| p_originType | BLOB (int) | Content origin type. Controls program badge display in the Kindle UI. Known values: `0` = purchased content (no program badges shown), `21` = Kindle Unlimited / subscription content (shows KU badge), `-1` = used for `Entry:Item:Series` container rows, `null`/empty = sideloaded with no origin info (Kindle may show KU and Prime Reading badges if the `p_cdeKey` matches a real Amazon ASIN) |
 | p_pvcId | BLOB | PVC identifier |
 | p_companionCdeKey | BLOB (string) | Companion CDE ASIN. For an audio book, we may have a companion ebook and vice-versa |
 | p_seriesState | BLOB (int) | Series membership state. `0` = this entry is a member of a series (the firmware hides it from the main library and shows it inside the series container). `1` = default value for all other entries (books not in a series, dictionaries, collections, system items, and `Entry:Item:Series` container rows themselves) |
@@ -211,6 +211,22 @@ database:
    series container (see below)
 3. **`p_seriesState = 0`** on each member book's `Entries` row, which tells the
    firmware to hide the individual book and show it inside the series instead
+
+### Program badges (Kindle Unlimited, Prime Reading)
+
+The Kindle UI shows program badges on books and series based on the
+`p_originType` and `p_contentState` fields of the member book entries. This is
+relevant when creating series from sideloaded books that use real Amazon ASINs
+as their `p_cdeKey`.
+
+| `p_originType` | `p_contentState` | Badge behavior |
+| -------------- | ---------------- | -------------- |
+| `0` | `1` | No badges. Treated as purchased/owned content |
+| `21` | `1` | Shows **Kindle Unlimited** badge |
+| `null`/empty | `0` | Shows **Kindle Unlimited** and **Prime Reading** badges (if the ASIN is eligible in Amazon's catalog) |
+
+When building series from sideloaded books, set `p_originType = 0` and
+`p_contentState = 1` on member books to suppress unwanted program badges.
 
 ### Entry:Item:Series rows
 
