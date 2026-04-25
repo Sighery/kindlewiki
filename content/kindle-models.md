@@ -5,7 +5,7 @@ weight: 0
 summary: Identify your Kindle model and the jailbreak method best suited for it.
 ---
 
-<h1>Kindle Models</h1>
+# Kindle Models
 
 <blockquote class="info">
 Identify your Kindle model and the jailbreak method best suited for it.
@@ -21,10 +21,8 @@ Identify your Kindle model and the jailbreak method best suited for it.
             <div class="modal-body">
                 <p style="font-size: 1.2em; margin-top: 0;">Please enter the first 8 characters of your Kindle's serial number below: </p>
                 <input type="text" id="serialNumber" maxlength="8" placeholder="Enter Serial Number" oninput="searchForSerial()" autocomplete="off">
-
                 <p id="searchStatus"></p>
                 <div id="searchResult">
-                    
                 </div>
             </div>
             <div class="modal-footer">
@@ -56,4 +54,4 @@ Identify your Kindle model and the jailbreak method best suited for it.
 </div>
 
 
-<script src="./modelFinder.js"></script>
+<script src="modelFinder.js"></script>

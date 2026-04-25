@@ -31,6 +31,10 @@
 
 {{ partial "include-scss.html" "css/main" }}
 
-<script src="/assets/js/global.js"></script>
-<script src="/assets/js/fluent_guide.js"></script>
-<script src="/assets/js/search.js"></script>
+<script>
+  const baseUrl = "{{ .Site.BaseURL }}";
+</script>
+
+<script src="{{ .Site.BaseURL }}/assets/js/global.js"></script>
+<script src="{{ .Site.BaseURL }}/assets/js/fluent_guide.js"></script>
+<script src="{{ .Site.BaseURL }}/assets/js/search.js"></script>
