@@ -1,11 +1,11 @@
-function getSerialInfo(serial) {    
+function getSerialInfo(serial) {
     if (serial.length == 2 || serial.length == 3)
         return {
             serial_version: serial.length == 2 ? 0 : 1,
             device_code: serial
         }
-        
-    if (serial[0] == "G") { 
+
+    if (serial[0] == "G") {
         if (serial.length < 6)
             return -1
 
@@ -56,7 +56,7 @@ function searchForSerial() {
     } else {
         for (const kindle of window.kindleModels) {
             if (kindle.serial_version < serialInfo.serial_version) {
-                continue; 
+                continue;
             } else {
                 if (Object.keys(kindle.device_codes).includes(serialInfo.device_code)) {
                     const header = document.createElement("h3");
@@ -84,7 +84,7 @@ function searchForSerial() {
                         const row = document.createElement("tr");
                         const header = document.createElement("th");
                         const field = document.createElement("td");
-                        
+
                         header.style = "text-align: right;";
 
                         header.innerText = kindleInfo[0];
@@ -102,7 +102,7 @@ function searchForSerial() {
                         const row = document.createElement("tr");
                         const header = document.createElement("td");
                         const field = document.createElement("td");
-                        
+
                         header.style = "text-align: right;";
 
                         header.innerText = kindleInfo[0];
@@ -116,8 +116,6 @@ function searchForSerial() {
 
                     searchResultDiv.appendChild(mainTable);
 
-                    gtag('event', 'model_search', serialInfo);
-
                     return;
                 }
             }
@@ -128,7 +126,6 @@ function searchForSerial() {
             searchStatus.innerText = "ERROR: Serial Number Too Short!";
         else
             searchStatus.innerHTML = "ERROR: Serial Number Not Found! Please Open a <a style=\"color: red;\" href=\"https://github.com/KindleModding/kindlemodding.github.io\">GitHub Issue.</a>";
-        //gtag('event', 'unknown_serial', serialInfo);
     }
 }
 
