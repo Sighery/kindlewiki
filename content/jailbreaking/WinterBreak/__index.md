@@ -57,7 +57,7 @@ It is based on [Mesquito](../../mesquito/)
                 <p class="warning">
                     Winterbreak/Mesquito does NOT work on firmware <code>5.18.1</code> and beyond
                     <br/>
-                    Please use <a href="/jailbreaking/AdBreak">AdBreak 5.18.1+</a>
+                    Please use <a href="../AdBreak">AdBreak 5.18.1+</a>
                 </p>
             </div>
         </div>
