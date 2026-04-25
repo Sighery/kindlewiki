@@ -48,10 +48,15 @@ jobs:
           echo "$PWD/dart-sass" >> $GITHUB_PATH
       - name: Download latest jb.sh release
         run: wget https://github.com/KindleModding/jb.sh/releases/latest/download/jb.sh -O ./static/jb.sh
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
       - name: Generate models.json
+        env:
+          HUGO_BASEURL: "${{ steps.pages.outputs.base_url }}"
         run: python static/models_json_generator.py
       - name: Build with Hugo
-        run: hugo --minify
+        run: hugo --minify --baseURL "${{ steps.pages.outputs.base_url }}"
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v4
