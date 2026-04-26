@@ -127,5 +127,5 @@ Unlike WinterBreak, WinterBreak2 uses the Kindle's built-in Experimental Browser
 If WinterBreak2 is not working for you, and your firmware is below 5.16.4, try the original [WinterBreak](../WinterBreak/) method instead (requires Amazon registration).
 
 ## Credits
-- **Scam.Net** — Concept, Discovery
-- **Penguins184** — Server
+- **Scam.Net** - Concept, Discovery
+- **Penguins184** - Server
