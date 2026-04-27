@@ -107,7 +107,6 @@ button, .button {
     cursor: pointer;
     text-decoration: none !important;
     box-shadow: none;
-    min-width: 150px;
 }
 
 button:hover:not(:disabled), 
@@ -672,10 +671,9 @@ textarea {
         font-size: 10pt;
     }
 
-    button, .button, .btn {
+    button, .button {
         padding: 0.8em 1.4em;
         font-size: 0.9em;
-        min-width: 120px;
     }
 
     .theme-toggle {

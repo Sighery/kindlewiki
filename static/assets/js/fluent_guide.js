@@ -45,12 +45,8 @@ class Guide {
     syncButtons() {
         for (const buttonSet of this.guide.getElementsByClassName("buttons")) {
             if (this.currentStep == this.steps.length - 1 && this.endText !== null) {
-                buttonSet.children[2].classList.remove("btn-green");
-                buttonSet.children[2].classList.add("btn-purple");
                 buttonSet.children[2].innerText = this.endText;
             } else {
-                buttonSet.children[2].classList.remove("btn-purple");
-                buttonSet.children[2].classList.add("btn-green");
                 buttonSet.children[2].innerText = "Next Step";
             }
 

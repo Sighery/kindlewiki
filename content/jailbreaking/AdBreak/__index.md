@@ -31,9 +31,9 @@ It is based on [CVE-2012-3748](https://scarybeastsecurity.blogspot.com/2017/05/o
 
 <div id="guide">
     <div class="buttons">
-        <button class="btn btn-orange" id="prev">Previous Step</button>
+        <button id="prev">Previous Step</button>
         <span id="stepCounter"></span>
-        <button class="btn btn-green" id="next">Next Step</button>
+        <button id="next">Next Step</button>
     </div>
     <div id="stepwrapper" class="stepwrapper">
         <div class="step">
@@ -115,9 +115,9 @@ It is based on [CVE-2012-3748](https://scarybeastsecurity.blogspot.com/2017/05/o
         </div>
     </div>
     <div class="buttons">
-        <button class="btn btn-orange" id="prev">Previous Step</button>
+        <button id="prev">Previous Step</button>
         <span id="stepCounter"></span>
-        <button class="btn btn-green" id="next">Next Step</button>
+        <button id="next">Next Step</button>
     </div>
 </div>
 <script>new Guide("guide", "../post-jailbreak/setting-up-a-hotfix", "Setting Up A Hotfix");</script>
