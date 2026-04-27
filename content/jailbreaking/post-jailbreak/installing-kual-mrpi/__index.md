@@ -21,7 +21,7 @@ You will need to install KUAL (Kindle Unified Application Launcher) and MRPI (Mo
             <div class="stepContent">
                 <a class="button" href="./kual-mrinstaller-khf.tar.xz">MRPI</a>
                 <p>This version of MRPI is provided by <a href="https://fw.notmarek.com/khf/">Marek</a></p>
-                <p class="important">You may need to free up 500 MB of space to install both MRPI and KUAL <a href="#troubleshooting">without issues</a></p>
+                <p class="important">You may need to free up 220 MB of space to install both MRPI and KUAL <a href="#troubleshooting">without issues</a></p>
             </div>
         </div>
         <div class="step">
@@ -87,7 +87,7 @@ You will need to install KUAL (Kindle Unified Application Launcher) and MRPI (Mo
 
 ## Troubleshooting
 
-- The installation or functionality of **KUAL** and **MRPI** may fail if there is not enough free space on your Kindle. If you are using the "[fill storage](../../prevent-auto-update/)" method to block updates, make sure your Kindle has at least `500 MB` of available space before installing KUAL and MRPI
+- The installation or functionality of **KUAL** and **MRPI** may fail if there is not enough free space on your Kindle. If you are using the "[fill storage](../../prevent-auto-update/)" method to block updates, make sure your Kindle has at least `220 MB` of available space before installing KUAL and MRPI
 - Verify that all folders and files are in the correct locations on your Kindle.
 - Try restarting the Kindle if the `;log mrpi` command is not responding
 - Ensure that the file does not have any special characters such as brackets in it, some browsers may rename files adding `(1)` or other additional suffixes to the file name and these should be removed before copying to the Kindle
