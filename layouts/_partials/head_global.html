@@ -58,5 +58,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   gtag('config', 'G-FBQYY5S667');
 </script>
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4468899728405672"
-     crossorigin="anonymous"></script>
+{{- with .Params.adfree -}}
+{{- else -}}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4468899728405672" crossorigin="anonymous"></script>
+{{- end-}}
