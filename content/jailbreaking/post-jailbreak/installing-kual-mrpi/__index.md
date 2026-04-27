@@ -19,7 +19,7 @@ You will need to install KUAL (Kindle Unified Application Launcher) and MRPI (Mo
         <div class="step">
             <h2>Download MRPI</h2>
             <div class="stepContent">
-                <a class="button" href="./kual-mrinstaller-khf.tar.xz">MRPI</a>
+                <a class="button" href="./kual-mrinstaller-khf.zip">MRPI (for modern devices)</a>
                 <p>This version of MRPI is provided by <a href="https://fw.notmarek.com/khf/">Marek</a></p>
                 <p class="important">You may need to free up 220 MB of space to install both MRPI and KUAL <a href="#troubleshooting">without issues</a></p>
             </div>
@@ -30,7 +30,7 @@ You will need to install KUAL (Kindle Unified Application Launcher) and MRPI (Mo
                 <a class="button" href="./Update_KUALBooklet_HDRepack.bin">KUAL (Coplate) - For Kindles newer than the K5 (any kindle released after 2012)</a>
                 <p>The above version of KUAL is provided by <a href="https://hackerdude.tech">Hackerdude</a></p>
                 <br/>
-                <a class="button" href="./KUAL-v2.7.37-gfcb45b5-20250419.tar.xz">KUAL - For legacy devices</a>
+                <a class="button" href="./KUAL-v2.7.37-gfcb45b5-20250419.zip">KUAL - For legacy devices</a>
                 <a class="button" href="https://github.com/KindleTweaks/PEKI" style="margin-top: 10px;">PEKI - Follow this guide instead if Coplate is broken</a>
             </div>
         </div>
