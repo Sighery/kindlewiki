@@ -9,15 +9,6 @@ weight: 2
 Create a new git repository in a safe location, this will be where we write the code for our app
 
 ## Setting up the Meson project
-### Creating the meson.options file
-Create a file called `meson.options` and copy the following to it:<br/>
-
-```python
-option('kindle_root_dir', type : 'string', value: '', description: 'The path to the Kindle\'s mounted rootfs (for linking libraries)')
-```
-<br/>
-
-The [`meson.options`](https://mesonbuild.com/Build-options.html) file tells Meson what parameters a project uses for configuration and compilation, in our case we only need the `kindle_root_dir` option so we can set it to our Kindle's root directory in a later step.
 
 ### Creating the meson.build file
 The `meson.build` file specifies how our project is configured and compiled.<br/>
@@ -27,6 +18,10 @@ project('example_gtk_application', 'cpp', version: 'v1.0.0', default_options: ['
 
 # Define dependencies we want
 gtk_dep = dependency('gtk+-2.0')
+
+# If you need the sysroot path, you can get it like this. This is defined
+# in the meson-crosscompile.txt file inside the SDK directory
+sysroot = meson.get_external_property('sys_root')
 
 ###
 # Project definition
@@ -94,6 +89,7 @@ Now we will use meson to make sure we can actually compile our code for both our
 
 Configure the Meson project for your computer as so:
 ```sh
+mkdir builddir
 meson setup builddir
 ```
 
@@ -102,6 +98,10 @@ Now we can try to compile our program
 meson compile -C builddir
 ```
 
+`builddir` is any arbitrary directory name. You can call it whatever you want,
+and you can have multiple build directories and switch `meson` commands
+between them.
+
 If you run the program on your computer, you should see an empty GTK window:
 ![](./images/first_window.png)
 
@@ -109,14 +109,29 @@ If you run the program on your computer, you should see an empty GTK window:
 ## Testing Cross-Compilation
 Now we can compile a version that can run on the Kindle itself:
 ```sh
-meson setup --cross-file <meson_crosscompile_path> builddir_<target>
+meson setup --cross-file <meson_crosscompile_path> builddir
 ```
 
 Where your target is the same as before and `<meson_crosscompile_path>` is substituted from the path the SDK installer gave you earlier.
 
-Once it is finished setting up, you can compile it just as you did before:
+Assuming you had extracted/set up the SDK under the directory
+`~/kindle-sdks/`, this would then look like:
+
 ```sh
-meson compile -C builddir_<target>
+# For HF targets
+meson setup --cross-file ~/kindle-sdks/x-tools/arm-kindlehf-linux-gnueabihf/meson-crosscompile.txt builddir
+# For SF targets
+meson setup --cross-file ~/kindle-sdks/x-tools/arm-kindlepw2-linux-gnueabi/meson-crosscompile.txt builddir
 ```
 
-If all the above steps work, then you have succesfully compiled your first application for the Kindle.
+Once it is finished setting up, you can compile it just as you did before:
+```sh
+meson compile -C builddir
+```
+
+If all the above steps work, then you have successfully compiled your first application for the Kindle.
+
+[Next step][Kindle Considerations]
+
+
+[Kindle Considerations]: ./kindle-considerations.html

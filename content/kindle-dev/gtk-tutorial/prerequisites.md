@@ -5,6 +5,33 @@ title: Prerequisites
 weight: 1
 ---
 
+# Using a prebuilt SDK
+The rest of the tutorial will show you how to manually set up the
+`koxtoolchain` + `kindle-sdk` combination. However, I'm already building
+pre-packaged SDKs that just need extracting and are ready for use afterwards.
+
+You can find these under the [kindle-sdk releases][]. Always take the latest
+one, as it will include the latest libraries. These are a device + specific
+firmware version, like `scribe1-5.17.3.tar.gz`, or
+`kindlepw5-5.16.2.1.1.tar.gz`. This doesn't mean they'll only work for a
+specific device and/or firmware, but some devices and/or firmwares will have
+different libraries, or different versions from libraries.
+
+If you are not tightly integrating against Kindle internal libraries, the
+included `kindlepw5-5.16.2.1.1.tar.gz` will work for SF (Soft-Float) Kindles,
+while `scribe1-5.17.3.tar.gz` will work for HF (Hard-Float) Kindles.
+
+```sh
+# Downloading the latest HF pre-build SDK:
+wget https://github.com/Sighery/kindle-sdk/releases/latest/download/scribe1-5.17.3.tar.gz
+# Unpacking to any arbitrary directory:
+mkdir ~/kindle-toolchains/
+tar -xzf scribe1-5.17.3.tar.gz -C ~/kindle-toolchain/
+```
+
+If you use one of the pre-built SDKs, you can skip to the next section,
+[Setting Up The Project][].
+
 # Prerequisites
 You will need to be running a Linux operating system* or WSL/msys2 under Windows<br/>
 *MacOS is untested but may work
@@ -95,7 +122,7 @@ The KMC Kindle SDK augments your existing koxtoolchain installation by providing
 
 #### 1. Clone the SDK
 ```sh
-git clone --recursive --depth=1 https://github.com/KindleModding/kindle-sdk.git
+git clone --recursive --depth=1 https://github.com/Sighery/kindle-sdk.git
 ```
 
 #### 2. Install the SDK for your target
@@ -108,3 +135,7 @@ Where `<target>` is the same as the toolchain you want to install the SDK for.
 
 ![](./images/sdk_install.png)
 Once the SDK has finished installing itself, make a note of the path it returns to the `meson-crosscompile.txt` file, this will be important later!
+
+
+[kindle-sdk releases]: https://github.com/Sighery/kindle-sdk/releases
+[Setting Up The Project]: ./setting-up.html
