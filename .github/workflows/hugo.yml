@@ -84,9 +84,7 @@ jobs:
       - name: Generate models.json
         env:
           HUGO_BASEURL: "${{ steps.pages.outputs.base_url }}"
-        run: |
-              cd static
-              python models_json_generator.py
+        run: python static/models_json_generator.py
       - name: Build with Hugo
         run: hugo --minify --baseURL "${{ steps.pages.outputs.base_url }}"
       - name: Upload artifact

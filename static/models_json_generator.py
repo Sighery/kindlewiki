@@ -208,7 +208,17 @@ itemToInsert = ('UNSUPPORTED', 0x2d0, 'UNKNOWN')
 model_tuples.insert(model_tuples.index(lineToInsertAfter) + 1, itemToInsert)
 
 
+import dataclasses
+import functools
 import json
+import logging
+import os
+import urllib.parse
+
+from pathlib import Path
+
+
+logger = logging.getLogger(__name__)
 
 ### KindleTool serial number magic int reverser katadelos
 CHARS = "0123456789ABCDEFGHJKLMNPQRSTUVWX"
@@ -242,6 +252,53 @@ def cammelToSpace(text):
     return finalString.strip()
 
 
+@functools.cache
+def baseURL() -> str:
+    """
+    Fetch baseURL from HUGO_BASEURL or hugo.toml configuration.
+    """
+    base_url = os.getenv("HUGO_BASEURL", "")
+    if base_url:
+        return base_url
+
+    hugo_path = Path(Path(__file__).parent, "../hugo.toml")
+
+    try:
+        import tomllib
+
+        with hugo_path.open("rb") as f:
+            conf = tomllib.load(f)
+            base_url = conf.get("baseURL", "")
+    except Exception:
+        logger.exception("Failed to parse site's base URL")
+
+    return base_url
+
+
+@dataclasses.dataclass(frozen=True)
+class JB:
+    name: str
+    link: str
+
+
+@functools.cache
+def produce_jb_links(*jbs: JB) -> str:
+    """
+    Produce jailbreak hyperlink tags for the find your model table.
+    """
+    if not jbs:
+        return "None Available"
+
+    base_url = baseURL()
+    parsed_base = urllib.parse.urlsplit(base_url)
+    subpath = parsed_base.path or ""
+    if subpath.endswith("/"):
+        subpath = subpath[:-1]
+
+    return "<br><br>".join(
+        f'<a href="{subpath}{jb.link}">{jb.name}</a>'
+        for jb in jbs
+    )
 
 
 
@@ -256,7 +313,7 @@ generationMap = [
         "last_firmware": "Not Yet Discontinued",
         "platform": "Platcs8",
         "board": "Calvados",
-        "jailbreak": "None Available",
+        "jailbreak": produce_jb_links(),
     },
     {
         "kindletool_names": ["KindleScribe3"],
@@ -267,7 +324,7 @@ generationMap = [
         "last_firmware": "Not Yet Discontinued",
         "platform": "Platpa6",
         "board": "Paloma",
-        "jailbreak": "None Available",
+        "jailbreak": produce_jb_links(),
     },
     {
         "kindletool_names": ["KindleBasic5"],
@@ -278,7 +335,11 @@ generationMap = [
         "last_firmware": "Not Yet Discontinued",
         "platform": "Bellatrix",
         "board": "Rossini",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak2\">WinterBreak2 < 5.16.4</a><br><br><a href=\"/jailbreaking/WinterBreak\">WinterBreak < 5.18.1</a><br/><br/><a href=\"/jailbreaking/AdBreak\">AdBreak 5.18.1 - 5.18.5.0.1</a>",
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak2 < 5.16.4", "/jailbreaking/WinterBreak2"),
+            JB("WinterBreak < 5.18.1", "/jailbreaking/WinterBreak"),
+            JB("AdBreak 5.18.1 - 5.18.5.0.1", "/jailbreaking/AdBreak"),
+        ),
     },
     {
         "kindletool_names": ["KindlePaperWhite6"],
@@ -289,7 +350,11 @@ generationMap = [
         "last_firmware": "Not Yet Discontinued",
         "platform": "Bellatrix4",
         "board": "Sangria",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak2\">WinterBreak2 < 5.16.4</a><br><br><a href=\"/jailbreaking/WinterBreak\">WinterBreak < 5.18.1</a><br/><br/><a href=\"/jailbreaking/AdBreak\">AdBreak 5.18.1 - 5.18.5.0.1</a>",
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak2 < 5.16.4", "/jailbreaking/WinterBreak2"),
+            JB("WinterBreak < 5.18.1", "/jailbreaking/WinterBreak"),
+            JB("AdBreak 5.18.1 - 5.18.5.0.1", "/jailbreaking/AdBreak"),
+        ),
     },
     {
         "kindletool_names": ["KindleScribe2"],
@@ -300,7 +365,10 @@ generationMap = [
         "last_firmware": "Not Yet Discontinued",
         "platform": "Bellatrix3",
         "board": "Pisco",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak2\">WinterBreak2 < 5.16.4</a><br><br><a href=\"/jailbreaking/WinterBreak\">WinterBreak < 5.18.1</a>",
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak2 < 5.16.4", "/jailbreaking/WinterBreak2"),
+            JB("WinterBreak < 5.18.1", "/jailbreaking/WinterBreak"),
+        ),
     },
     {
         "kindletool_names": ["KindleColorSoft"],
@@ -311,7 +379,9 @@ generationMap = [
         "last_firmware": "Not Yet Discontinued",
         "platform": "Bellatrix4",
         "board": "Seabreeze",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak\">WinterBreak < 5.18.0.2</a>",
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak < 5.18.0.2", "/jailbreaking/WinterBreak"),
+        ),
     },
     # Kindle Scribe, released December 2022 on FW 5.16.0
     {
@@ -323,7 +393,11 @@ generationMap = [
         "last_firmware": "Not Yet Discontinued",
         "platform": "Bellatrix3",
         "board": "Barolo",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak2\">WinterBreak2 < 5.16.4</a><br><br><a href=\"/jailbreaking/WinterBreak\">WinterBreak < 5.18.1</a><br/><br/><a href=\"/jailbreaking/AdBreak\">AdBreak 5.18.1 - 5.18.5.0.1</a>"
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak2 < 5.16.4", "/jailbreaking/WinterBreak2"),
+            JB("WinterBreak < 5.18.1", "/jailbreaking/WinterBreak"),
+            JB("AdBreak 5.18.1 - 5.18.5.0.1", "/jailbreaking/AdBreak"),
+        ),
     },
     # Kindle Basic 4, released October 12 2022 on FW 5.15.0
     {
@@ -335,7 +409,12 @@ generationMap = [
         "last_firmware": "Not Yet Discontinued",
         "platform": "Bellatrix",
         "board": "Cava",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak2\">WinterBreak2 < 5.16.4</a><br><br><a href=\"/jailbreaking/WinterBreak\">WinterBreak < 5.18.1</a><br/><br/><a href=\"/jailbreaking/AdBreak\">AdBreak 5.18.1 - 5.18.5.0.1</a><br/><br/><a href=\"/jailbreaking/Nosebleed\">Nosebleed 5.18.6</a>"
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak2 < 5.16.4", "/jailbreaking/WinterBreak2"),
+            JB("WinterBreak < 5.18.1", "/jailbreaking/WinterBreak"),
+            JB("AdBreak 5.18.1 - 5.18.5.0.1", "/jailbreaking/AdBreak"),
+            JB("Nosebleed 5.18.6", "/jailbreaking/Nosebleed"),
+        ),
     },
     # Kindle PaperWhite 5, released October 27 2021 on FW 5.14.0
     {
@@ -347,7 +426,12 @@ generationMap = [
         "last_firmware": "Not Yet Discontinued",
         "platform": "Bellatrix",
         "board": "Malbec",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak2\">WinterBreak2 < 5.16.4</a><br><br><a href=\"/jailbreaking/WinterBreak\">WinterBreak < 5.18.1</a><br/><br/><a href=\"/jailbreaking/AdBreak\">AdBreak 5.18.1 - 5.18.5.0.1</a><br/><br/><a href=\"/jailbreaking/Nosebleed\">Nosebleed 5.18.6</a>"
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak2 < 5.16.4", "/jailbreaking/WinterBreak2"),
+            JB("WinterBreak < 5.18.1", "/jailbreaking/WinterBreak"),
+            JB("AdBreak 5.18.1 - 5.18.5.0.1", "/jailbreaking/AdBreak"),
+            JB("Nosebleed 5.18.6", "/jailbreaking/Nosebleed"),
+        ),
     },
     # Kindle Oasis 3, released July 24 2019 on FW 5.12.0
     {
@@ -359,7 +443,11 @@ generationMap = [
         "last_firmware": "5.18.2",
         "platform": "Zelda",
         "board": "Stinger",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak2\">WinterBreak2 < 5.16.4</a><br><br><a href=\"/jailbreaking/WinterBreak\">WinterBreak < 5.18.1</a><br/><br/><a href=\"/jailbreaking/AdBreak\">AdBreak 5.18.1+</a>"
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak2 < 5.16.4", "/jailbreaking/WinterBreak2"),
+            JB("WinterBreak < 5.18.1", "/jailbreaking/WinterBreak"),
+            JB("AdBreak 5.18.1+", "/jailbreaking/AdBreak"),
+        ),
     },
     # Kindle Basic 3, released April 10 2019 on FW 5.1x.y
     {
@@ -371,7 +459,11 @@ generationMap = [
         "last_firmware": "5.18.1",
         "platform": "Rex",
         "board": "Moonshine",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak2\">WinterBreak2 < 5.16.4</a><br><br><a href=\"/jailbreaking/WinterBreak\">WinterBreak < 5.18.1</a><br/><br/><a href=\"/jailbreaking/AdBreak\">AdBreak 5.18.1+</a>"
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak2 < 5.16.4", "/jailbreaking/WinterBreak2"),
+            JB("WinterBreak < 5.18.1", "/jailbreaking/WinterBreak"),
+            JB("AdBreak 5.18.1+", "/jailbreaking/AdBreak"),
+        ),
     },
     # Kindle PaperWhite 4, released November 7 2018 on FW 5.10.0.1/5.10.0.2
     {
@@ -383,7 +475,11 @@ generationMap = [
         "last_firmware": "5.18.1",
         "platform": "Rex",
         "board": "Jaeger",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak2\">WinterBreak2 < 5.16.4</a><br><br><a href=\"/jailbreaking/WinterBreak\">WinterBreak < 5.18.1</a><br/><br/><a href=\"/jailbreaking/AdBreak\">AdBreak 5.18.1+</a>"
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak2 < 5.16.4", "/jailbreaking/WinterBreak2"),
+            JB("WinterBreak < 5.18.1", "/jailbreaking/WinterBreak"),
+            JB("AdBreak 5.18.1+", "/jailbreaking/AdBreak"),
+        ),
     },
     # Kindle x Migu, released 2017 on FW 5.7.2.8 (Based on Android 5.1.1?)
     {
@@ -407,7 +503,10 @@ generationMap = [
         "last_firmware": "5.16.2.1.1",
         "platform": "Zelda",
         "board": "Cognac",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak2\">WinterBreak2 < 5.16.4</a><br><br><a href=\"/jailbreaking/WinterBreak\">WinterBreak</a>"
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak2 < 5.16.4", "/jailbreaking/WinterBreak2"),
+            JB("WinterBreak", "/jailbreaking/WinterBreak"),
+        ),
     },
     # Kindle Basic 2, released summer 2016 on FW 5.8.0
     {
@@ -419,7 +518,10 @@ generationMap = [
         "last_firmware": "5.16.2.1.1",
         "platform": "Heisenberg",
         "board": "Eanab",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak2\">WinterBreak2 < 5.16.4</a><br><br><a href=\"/jailbreaking/WinterBreak\">WinterBreak</a>"
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak2 < 5.16.4", "/jailbreaking/WinterBreak2"),
+            JB("WinterBreak", "/jailbreaking/WinterBreak"),
+        ),
     },
     # Kindle Oasis, released late spring 2016 on FW 5.7.1.1
     {
@@ -431,7 +533,10 @@ generationMap = [
         "last_firmware": "5.16.2.1.1",
         "platform": "Duet",
         "board": "Whisky",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak2\">WinterBreak2 < 5.16.4</a><br><br><a href=\"/jailbreaking/WinterBreak\">WinterBreak</a>"
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak2 < 5.16.4", "/jailbreaking/WinterBreak2"),
+            JB("WinterBreak", "/jailbreaking/WinterBreak"),
+        ),
     },
     # Kindle PaperWhite 3, White, appeared w/ FW 5.7.3.1, released summer 2016 on FW 5.7.x?
     {
@@ -443,7 +548,10 @@ generationMap = [
         "last_firmware": "5.16.2.1.1",
         "platform": "Wario",
         "board": "Muscat",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak2\">WinterBreak2 < 5.16.4</a><br><br><a href=\"/jailbreaking/WinterBreak\">WinterBreak</a>"
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak2 < 5.16.4", "/jailbreaking/WinterBreak2"),
+            JB("WinterBreak", "/jailbreaking/WinterBreak"),
+        ),
     },
     # Kindle PaperWhite 3, released summer 2015 on FW 5.6.1
     {
@@ -455,7 +563,10 @@ generationMap = [
         "last_firmware": "5.16.2.1.1",
         "platform": "Wario",
         "board": "Muscat",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak2\">WinterBreak2 < 5.16.4</a><br><br><a href=\"/jailbreaking/WinterBreak\">WinterBreak</a>"
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak2 < 5.16.4", "/jailbreaking/WinterBreak2"),
+            JB("WinterBreak", "/jailbreaking/WinterBreak"),
+        ),
     },
     # Kindle Voyage, released fall 2014 on FW 5.5.0
     {
@@ -467,7 +578,10 @@ generationMap = [
         "last_firmware": "5.13.6",
         "platform": "Wario",
         "board": "Icewine",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak2\">WinterBreak2 < 5.16.4</a><br><br><a href=\"/jailbreaking/WinterBreak\">WinterBreak</a>"
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak2 < 5.16.4", "/jailbreaking/WinterBreak2"),
+            JB("WinterBreak", "/jailbreaking/WinterBreak"),
+        ),
     },
     # Kindle Basic (Pearl, Touch), released fall 2014 on FW 5.6.0
     {
@@ -479,7 +593,10 @@ generationMap = [
         "last_firmware": "5.12.2.2",
         "platform": "Wario",
         "board": "Bourbon",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak2\">WinterBreak2 < 5.16.4</a><br><br><a href=\"/jailbreaking/WinterBreak\">WinterBreak</a>"
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak2 < 5.16.4", "/jailbreaking/WinterBreak2"),
+            JB("WinterBreak", "/jailbreaking/WinterBreak"),
+        ),
     },
     # Kindle PaperWhite 2 (black bezel), released fall 2013 on FW 5.4.0
     {
@@ -491,7 +608,10 @@ generationMap = [
         "last_firmware": "5.12.2.2",
         "platform": "Wario",
         "board": "Pinot",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak2\">WinterBreak2 < 5.16.4</a><br><br><a href=\"/jailbreaking/WinterBreak\">WinterBreak</a>"
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak2 < 5.16.4", "/jailbreaking/WinterBreak2"),
+            JB("WinterBreak", "/jailbreaking/WinterBreak"),
+        ),
     },
     # Kindle PaperWhite (black bezel), released fall 2012 on FW 5.2.0
     {
@@ -503,7 +623,10 @@ generationMap = [
         "last_firmware": "5.6.1.1",
         "platform": "Wario",
         "board": "Pinot",
-        "jailbreak": "<a href=\"/jailbreaking/WinterBreak2\">WinterBreak2 < 5.16.4</a><br><br><a href=\"/jailbreaking/WinterBreak\">WinterBreak</a>"
+        "jailbreak": produce_jb_links(
+            JB("WinterBreak2 < 5.16.4", "/jailbreaking/WinterBreak2"),
+            JB("WinterBreak", "/jailbreaking/WinterBreak"),
+        ),
     },
     # Kindle 5 touch
     {
@@ -515,7 +638,9 @@ generationMap = [
         "last_firmware": "5.3.7.3",
         "platform": "Yoshi",
         "board": "Whitney",
-        "jailbreak": "<a href=\"/jailbreaking/Legacy/K5-Jailbreak/\">K5 JailBreak (5.0.x - 5.4.4.2)</a>"
+        "jailbreak": produce_jb_links(
+            JB("K5 JailBreak (5.0.x - 5.4.4.2)", "/jailbreaking/Legacy/K5-Jailbreak/"),
+        ),
     },
     # Kindle 4 with a black bezel, released fall 2012
     {
@@ -527,7 +652,9 @@ generationMap = [
         "last_firmware": "4.1.4",
         "platform": "Yoshi",
         "board": "Sauza",
-        "jailbreak": "<a href=\"/jailbreaking/Legacy/K4-Jailbreak/\">NiLuJe K4 Jailbreak</a>"
+        "jailbreak": produce_jb_links(
+            JB("NiLuJe K4 Jailbreak", "/jailbreaking/Legacy/K4-Jailbreak/"),
+        ),
     },
     # Kindle 4 with a silver bezel, released fall 2011
     {
@@ -539,7 +666,9 @@ generationMap = [
         "last_firmware": "4.1.4",
         "platform": "Yoshi",
         "board": "Tequila",
-        "jailbreak": "<a href=\"/jailbreaking/Legacy/K4-Jailbreak/\">NiLuJe K4 Jailbreak</a>"
+        "jailbreak": produce_jb_links(
+            JB("NiLuJe K4 Jailbreak", "/jailbreaking/Legacy/K4-Jailbreak/"),
+        ),
     },
     # Kindle 3 (Kindle Keyboard)
     {
@@ -551,7 +680,9 @@ generationMap = [
         "last_firmware": "3.4.3",
         "platform": "Luigi",
         "board": "Shasta",
-        "jailbreak": "<a href=\"/jailbreaking/Legacy/K2DXDXGK3-Jailbreak/\">NiLuJe K2/DX/DXG/K3 Jailbreak</a>"
+        "jailbreak": produce_jb_links(
+            JB("NiLuJe K2/DX/DXG/K3 Jailbreak", "/jailbreaking/Legacy/K2DXDXGK3-Jailbreak/"),
+        ),
     },
     # Kindle DX
     {
@@ -563,7 +694,9 @@ generationMap = [
         "last_firmware": "2.5.8",
         "platform": "???",
         "board": "Nell/NellSL/NellWW",
-        "jailbreak": "<a href=\"/jailbreaking/Legacy/K2DXDXGK3-Jailbreak/\">NiLuJe K2/DX/DXG/K3 Jailbreak</a>"
+        "jailbreak": produce_jb_links(
+            JB("NiLuJe K2/DX/DXG/K3 Jailbreak", "/jailbreaking/Legacy/K2DXDXGK3-Jailbreak/"),
+        ),
     },
     # Kindle 2
     {
@@ -575,7 +708,9 @@ generationMap = [
         "last_firmware": "2.5.8",
         "platform": "Mario/MarioDeprecated",
         "board": "Mario",
-        "jailbreak": "<a href=\"/jailbreaking/Legacy/K2DXDXGK3-Jailbreak/\">NiLuJe K2/DX/DXG/K3 Jailbreak</a>"
+        "jailbreak": produce_jb_links(
+            JB("NiLuJe K2/DX/DXG/K3 Jailbreak", "/jailbreaking/Legacy/K2DXDXGK3-Jailbreak/"),
+        ),
     },
     # Kindle
     {
@@ -654,5 +789,8 @@ for model in model_tuples:
             serial = hex(modelInt).split('x')[-1].upper().rjust(2, '0')
         newModelMap[index]["device_codes"][serial] = { "kindletool_name": modelName, "amazon_model_id": modelId }
 
-with open('./models.json', 'w') as file:
+
+# Always write models.json next to this file, regardless of cwd
+models_path = Path(Path(__file__).parent, "models.json")
+with models_path.open("w", encoding="UTF-8") as file:
     file.write(json.dumps(newModelMap, indent=2))
