@@ -224,7 +224,6 @@ You can do one of the following:
 - [Downgrade your Kindle](https://kindlemodding.org/firmware-and-flashing/downgrading/)
 - Download scriptlets:
     - [Marek's Scriplets](https://scriptlets.notmarek.com/)
-    - [Kindle Modding Tools & Resources](https://kindlemodshelf.me/)
 - [Develop more extensions](https://kindlemodding.org/kindle-dev/) 
 - Browse [MobileRead](https://www.mobileread.com/forums/forumdisplay.php?f=150) or the Kindle Modding Community Discord Server for more scriplets and extensions.
 - Install Alpine Linux
