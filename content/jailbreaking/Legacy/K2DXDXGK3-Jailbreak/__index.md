@@ -92,14 +92,14 @@ const jbDevices = [
         "nickname": "K2",
         "installers": [
             {
-                "url": "./Update_jailbreak_0.13.N_k2_install.bin",
+                "url": "./k2/Update_jailbreak_k2_install.bin",
                 "min_firmware": null,
                 "max_firmware": null
             }
         ],
         "uninstallers": [
             {
-                "url": "./Update_jailbreak_0.13.N_k2_uninstall.bin",
+                "url": "./k2/Update_jailbreak_k2_uninstall.bin",
                 "min_firmware": null,
                 "max_firmware": null
             }
@@ -110,14 +110,14 @@ const jbDevices = [
         "device_code": "03",
         "installers": [
             {
-                "url": "./Update_jailbreak_0.13.N_k2i_install.bin",
+                "url": "./k2/Update_jailbreak_k2i_install.bin",
                 "min_firmware": null,
                 "max_firmware": null
             }
         ],
         "uninstallers": [
             {
-                "url": "./Update_jailbreak_0.13.N_k2i_uninstall.bin",
+                "url": "./k2/Update_jailbreak_k2i_uninstall.bin",
                 "min_firmware": null,
                 "max_firmware": null
             }
@@ -128,14 +128,14 @@ const jbDevices = [
         "device_code": "04",
         "installers": [
             {
-                "url": "./Update_jailbreak_0.13.N_dx_install.bin",
+                "url": "./k2/Update_jailbreak_dx_install.bin",
                 "min_firmware": null,
                 "max_firmware": null
             }
         ],
         "uninstallers": [
             {
-                "url": "./Update_jailbreak_0.13.N_dx_uninstall.bin",
+                "url": "./k2/Update_jailbreak_dx_uninstall.bin",
                 "min_firmware": null,
                 "max_firmware": null
             }
@@ -146,14 +146,14 @@ const jbDevices = [
         "device_code": "05",
         "installers": [
             {
-                "url": "./Update_jailbreak_0.13.N_dxi_install.bin",
+                "url": "./k2/Update_jailbreak_dxi_install.bin",
                 "min_firmware": null,
                 "max_firmware": null
             }
         ],
         "uninstallers": [
             {
-                "url": "./Update_jailbreak_0.13.N_dxi_uninstall.bin",
+                "url": "./k2/Update_jailbreak_dxi_uninstall.bin",
                 "min_firmware": null,
                 "max_firmware": null
             }
@@ -164,14 +164,14 @@ const jbDevices = [
         "device_code": "09",
         "installers": [
             {
-                "url": "./Update_jailbreak_0.13.N_dxg_install.bin",
+                "url": "./k2/Update_jailbreak_dxg_install.bin",
                 "min_firmware": null,
                 "max_firmware": null
             }
         ],
         "uninstallers": [
             {
-                "url": "./Update_jailbreak_0.13.N_dxg_uninstall.bin",
+                "url": "./k2/Update_jailbreak_dxg_uninstall.bin",
                 "min_firmware": null,
                 "max_firmware": null
             }
@@ -182,19 +182,19 @@ const jbDevices = [
         "device_code": "06",
         "installers": [
             {
-                "url": "./Update_jailbreak_0.13.N_k3g_install.bin",
+                "url": "./k3_3.2.1/Update_jailbreak_k3g_install.bin",
                 "min_firmware": [3, 3],
                 "max_firmware": [3, 4, 4]
             },
             {
-                "url": "Update_jailbreak_0.13.N_k3g-3.0-to-3.2_install.bin",
+                "url": "./k3_3.0-3.2/Update_jailbreak_k3g_3.0-to-3.2_install.bin",
                 "min_firmware": [3, 0],
                 "max_firmware": [3, 3]
             }
         ],
         "uninstallers": [
             {
-                "url": "./Update_jailbreak_0.13.N_k3g_uninstall.bin",
+                "url": "./k3_3.0-3.2/Update_jailbreak_k3g_uninstall.bin",
                 "min_firmware": null,
                 "max_firmware": [3, 4, 4]
             }
@@ -205,19 +205,19 @@ const jbDevices = [
         "device_code": "08",
         "installers": [
             {
-                "url": "./Update_jailbreak_0.13.N_k3w_install.bin",
+                "url": "./k3_3.2.1/Update_jailbreak_k3w_install.bin",
                 "min_firmware": [3, 3],
                 "max_firmware": [3, 4, 4]
             },
             {
-                "url": "Update_jailbreak_0.13.N_k3w-3.0-to-3.2_install.bin",
+                "url": "./k3_3.0-3.2/Update_jailbreak_k3w_3.0-to-3.2_install.bin",
                 "min_firmware": [3, 0],
                 "max_firmware": [3, 3]
             }
         ],
         "uninstallers": [
             {
-                "url": "./Update_jailbreak_0.13.N_k3w_uninstall.bin",
+                "url": "./k3_3.0-3.2/Update_jailbreak_k3w_uninstall.bin",
                 "min_firmware": null,
                 "max_firmware": [3, 4, 4]
             }
@@ -228,19 +228,19 @@ const jbDevices = [
         "device_code": "0A",
         "installers": [
             {
-                "url": "./Update_jailbreak_0.13.N_k3gb_install.bin",
+                "url": "./k3_3.2.1/Update_jailbreak_k3gb_install.bin",
                 "min_firmware": [3, 3],
                 "max_firmware": [3, 4, 4]
             },
             {
-                "url": "Update_jailbreak_0.13.N_k3gb-3.0-to-3.2_install.bin",
+                "url": "./k3_3.0-3.2/Update_jailbreak_k3gb_3.0-to-3.2_install.bin",
                 "min_firmware": [3, 0],
                 "max_firmware": [3, 3]
             }
         ],
         "uninstallers": [
             {
-                "url": "./Update_jailbreak_0.13.N_k3gb_uninstall.bin",
+                "url": "./k3_3.0-3.2/Update_jailbreak_k3gb_uninstall.bin",
                 "min_firmware": null,
                 "max_firmware": [3, 4, 4]
             }
