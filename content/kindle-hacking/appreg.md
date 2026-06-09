@@ -238,7 +238,7 @@ As the name suggests, this table is responsible for associating specific kinds o
 | com.lab126.booklet.reader |	whisper-touch |	supported |
 
 ### dconf
-Configuration values from what is known as `dconf` is stored in teh `appreg.db` file under properties with the `dcc` or `dcd` `handlerId`:
+Configuration values from what is known as `dconf` is stored in the `appreg.db` file under properties with the `dcc` or `dcd` `handlerId`:
 
 | handlerId | name | value |
 | --------- | ---- | ----- |
