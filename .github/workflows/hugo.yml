@@ -54,7 +54,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('_jb.sh/**') }}
       - name: Build jb.sh
         if: steps.cache.outputs.cache-hit != 'true'
-        uses: ./_jb.sh/.github/workflows/main.yml
+        uses: ./_jb.sh/.github/actions/build
       - name: Copy jb.sh to static folder
         run: cp _jb.sh/build/jb.sh ./static/
       - name: Generate models.json
