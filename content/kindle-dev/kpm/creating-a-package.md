@@ -21,7 +21,7 @@ example_package
 1 directory, 1 file
 ```
 
-The manifest file will now be initialised to target the `kindleany` platform (see: [`targeting specific platforms`](#targeting-specific-platforms))
+The manifest file will now be initialised to target all platforms (see: [`targeting specific platforms`](#targeting-specific-platforms))
 
 ## Packing
 To convert your package folder to a `kpkg` file that can be added to a repository and that KPM can install, use `kpm-helper.py`:
