@@ -66,7 +66,7 @@ It is encouraged to use the `install.sh` hook to place a scriptlet in the `/mnt/
 It is recommended that the scriptlet runs `/var/local/kmc/bin/kpm launch PACKAGENAME` to run the package's `launch.sh`
 
 ### Guidelines
-- The `uninstall.sh` hook will be passed the parameter `upgrade` if this uninstallation is part of an upgrade, you can use this to determine whether configuration files should be deleted or not.
+- During upgrades, the `install.sh` hook is ran directly without running `uninstall.sh` on the previous package.
 - The `uninstall.sh` hook should NOT delete package files, this is handled by KPM
  
 ## Writing To Rootfs
