@@ -22,7 +22,7 @@ You can read the writeup [here](https://penguins184.xyz/blog/springbreak-jailbre
 
 - A PC, Cable
 - A Registered `KT5`, `PW5(SE)`, `KT4`, or `PW4`, running `5.19.2(.0.1)` or `5.18.1.1.1`
-- Patience
+- Patience, Wi-Fi connection.
 
 > [!INFO]
 > If you face any difficulty in following these guides, please navigate to the [troubleshooting](#troubleshooting) section, and/or make a ticket in the KindleModding Discord support forums.
@@ -120,7 +120,7 @@ You can read the writeup [here](https://penguins184.xyz/blog/springbreak-jailbre
             <div class="stepContent">
                 <p>Unplug the Kindle, on the Homescreen press the 'store' icon.</p>
                 <p class="note">
-                    When prompted, turn off aeroplane mode.
+                    When prompted, turn off aeroplane mode. <b>Yes, you need Wi-Fi! You can turn it off immediately after SpringBreak has loaded.</b>
                 </p>
                 <img src="./store_aeroplane.png">
             </div>
