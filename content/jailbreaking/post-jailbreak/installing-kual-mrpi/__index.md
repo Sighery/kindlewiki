@@ -30,7 +30,7 @@ You will need to install KUAL (Kindle Unified Application Launcher) and MRPI (Mo
                 <tbody>
                     <tr>
                         <td>K5 and newer</td>
-                        <td>Download the below file, unzip it, and copy both <code>KUAL.sh</code> and <code>KUAL.jar</code> to the <code>documents</code> folder on the Kindle.</td>
+                        <td>Download PEKI</td>
                         <td><a href="https://github.com/KindleTweaks/PEKI/releases/latest/download/PEKI.zip">PEKI</a></td>
                     </tr>
                     <tr>
@@ -63,7 +63,7 @@ You will need to install KUAL (Kindle Unified Application Launcher) and MRPI (Mo
         <div class="step">
             <h2>Copying KUAL</h2>
             <div class="stepContent">
-                <p>Copy the <code>KUAL.sh</code> file to your Kindle's <code>documents</code> folder</p>
+                <p>Unzip <code>PEKI.zip</code>, and copy both <code>KUAL.sh</code> and <code>KUAL.jar</code> to the <code>documents</code> folder on the Kindle.</p>
             </div>
         </div>
         <div class="step">
