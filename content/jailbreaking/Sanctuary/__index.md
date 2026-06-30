@@ -12,7 +12,7 @@ slug: index
 > <br/>
 > \- Herman Melville
 
-Sanctuary is a jailbreak released on MM/DD/2026 by [Ava](https://ko-fi.com/yubaix), [Alysa (Sky)](https://ko-fi.com/skylarplayz348), [sparklerfish](https://give.thetrevorproject.org/give/63307#!/donation/checkout).
+Sanctuary is a jailbreak released on 30/06/2026 by [Ava](https://ko-fi.com/yubaix), [Alysa (Sky)](https://ko-fi.com/skylarplayz348), [sparklerfish](https://give.thetrevorproject.org/give/63307#!/donation/checkout).
 
 ## Prerequisites
 
